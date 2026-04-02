@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Export";
+}
+
+<h3>Export Employee Data</h3>
+
+<div class="mb-3">
+    <input type="text" id="searchText" class="form-control" placeholder="Search term (optional)" />
+</div>
+<button class="btn btn-success" id="btnExport">Export to Excel</button>
+
+<script>
+    $("#btnExport").click(async function () {
+        const token = sessionStorage.getItem("jwt");
+        const search = $("#searchText").val() || "";
+
+        const res = await fetch(`/api/Emp/export/excel?search=${encodeURIComponent(search)}`, {
+            method: "GET",
+            headers: { "Authorization": "Bearer " + token }
+        });
+        if (res.status === 403) {
+            const body = await res.json().catch(() => ({}));
+            alert(body.message || "You are not an Admin.");
+            return;
+        }
+        if (res.status === 401) { window.location.href = "/AuthenticationUI/Login"; return; }
+
+        if (!res.ok) { alert("Export failed: " + res.status); return; }
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Employees.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    });
+</script>
+
+

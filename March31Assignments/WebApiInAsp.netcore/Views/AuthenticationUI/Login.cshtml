@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="modal show d-block" tabindex="-1">
+    <div class="modal-dialog" id="modalDialog">
+        <div class="modal-content">
+            <form id="loginForm">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Login</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label>Username</label>
+                        <input type="text" name="username" class="form-control" required />
+                    </div>
+                    <div class="mb-2">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required />
+                    </div>
+                    <p>Don't have an account? <a href="/AuthenticationUI/Register">Register</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#loginForm").submit(function (e) {
+        e.preventDefault();
+        const data = {
+            username: $("input[name='username']").val(),
+            password: $("input[name='password']").val()
+        };
+
+        $.ajax({
+            url: "/api/Authentication/login",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (res) {
+                sessionStorage.setItem("jwt", res.token);
+                alert("Login successful");
+                // Save username in server-side session
+                $.post("/AuthenticationUI/SaveSession", { username: data.username }, function () {
+                    window.location.href = "/EmployeeUI/Index";
+                });
+            },
+            error: function () {
+                alert("Login failed");
+            }
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#modalDialog").draggable({
+            handle: ".modal-header"  // Only drag using header
+        });
+    });
+</script>

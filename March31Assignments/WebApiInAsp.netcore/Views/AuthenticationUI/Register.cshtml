@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<<!-- Modal Register -->
+    <div class="modal show d-block" tabindex="-1">
+        <div class="modal-dialog" id="modalDialog">
+            // added id and down added script to make it scrollable in jquery
+            <div class="modal-content">
+                <form id="registerForm">
+                    <div class="modal-header bg-warning text-white">
+                        <h5 class="modal-title">Register</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-2">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" required />
+                        </div>
+                        <div class="mb-2">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" required />
+                        </div>
+                        <div class="mb-2">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required />
+                        </div>
+                        <div class="mb-2">
+                            <label>Role</label>
+                            <select id="roleSelect" class="form-select" required>
+                                <option value="" disabled selected>-- Select Role --</option>
+                                <option value="Admin">Admin</option>
+                                <option value="HR">HR</option>
+                                <option value="User">User</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#registerForm").submit(function (e) {
+            e.preventDefault();
+
+            const user = {
+                username: $("input[name='username']").val(),
+                email: $("input[name='email']").val(),
+                password: $("input[name='password']").val()
+            };
+
+            const role = $("#roleSelect").val();
+
+            if (!role) {
+                alert("Please select a role.");
+                return;
+            }
+
+            $.ajax({
+                url: `/api/Authentication?role=${role}`,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                success: function (res) {
+                    alert(res.message);
+                    window.location.href = "/AuthenticationUI/Login";
+                },
+                error: function (xhr) {
+                    alert("Registration failed: " + xhr.responseText);
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#modalDialog").draggable({
+                handle: ".modal-header"  // Only drag using header
+            });
+        });
+    </script>
+
