@@ -1,0 +1,56 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Products</h1>
+
+<button class="btn btn-primary mb-2" onclick="loadProducts()">Reload Products</button>
+
+<table class="table" id="productTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section Scripts {
+    <script>
+        // ✅ Reusable function
+        function loadProducts() {
+
+            $.ajax({
+                url: "https://localhost:7275/api/Product",
+                type: "GET",
+                success: function (data) {
+
+                    let rows = "";
+
+                    $.each(data, function (i, item) {
+                        rows += `<tr>
+                                    <td>${item.id}</td>
+                                    <td>${item.name}</td>
+                                    <td>${item.price}</td>
+                                    <td>${item.category}</td>
+                                 </tr>`;
+                    });
+
+                    $("#productTable tbody").html(rows);
+                },
+                error: function () {
+                    alert("Error fetching data");
+                }
+            });
+        }
+
+        // ✅ Call when page loads
+        $(document).ready(function () {
+            loadProducts();
+        });
+    </script>
+}
