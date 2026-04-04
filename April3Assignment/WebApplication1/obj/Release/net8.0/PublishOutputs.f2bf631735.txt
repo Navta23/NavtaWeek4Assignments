@@ -1,0 +1,7 @@
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\WebApplication1.exe
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\appsettings.json
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\WebApplication1.dll
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\WebApplication1.deps.json
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\WebApplication1.runtimeconfig.json
+C:\Users\gupta\OneDrive\Desktop\.net\day62work\WebApplication1\WebApplication1\obj\Release\net8.0\PubTmp\Out\WebApplication1.pdb
