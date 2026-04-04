@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Export";
+}
+
+<h3>Export Employee Data</h3>
+
+<div class="mb-3">
+    <input type="text" id="searchText" class="form-control" placeholder="Search term (optional)" />
+</div>
+<button class="btn btn-success" id="btnExport">Export to Excel</button>
+
+<script>
+    $(document).ready(function () {
+        $("#btnExport").click(function () {
+            let search = $("#searchText").val();
+
+            // Create dynamic link and click to download
+            let link = document.createElement('a');
+            link.href = `/api/Emp/export/excel?search=${encodeURIComponent(search)}`;
+            link.download = "Employees.xlsx";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    });
+</script>
+
